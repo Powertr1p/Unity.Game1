@@ -12,7 +12,6 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
-        creditsPopup.enabled = false;
         creditsShowAnimator = creditsPopup.GetComponent<Animator>();
     }
 
@@ -23,8 +22,7 @@ public class SceneController : MonoBehaviour
 
     public void OnCreditsButtonClick()
     {
-        creditsShowAnimator.SetBool("Clicked", true);
-        creditsPopup.enabled = true;
+        creditsShowAnimator.SetBool("Show", true);
     }
 
     public void OnExitButtonClick()
@@ -34,8 +32,7 @@ public class SceneController : MonoBehaviour
 
     public void OnClosePopupButton()
     {
-        creditsPopup.enabled = false;
-        creditsShowAnimator.SetBool("Clicked", false);
+        creditsShowAnimator.SetBool("Show", false);
     }
 
 }
