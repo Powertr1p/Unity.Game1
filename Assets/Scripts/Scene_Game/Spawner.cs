@@ -9,11 +9,17 @@ public class Spawner : MonoBehaviour
     private Vector2 currentPos;
     private float timePassed;
     private bool isSpawnerBusy = false;
-    private float _cooldown;
+    private float _cooldown = 0;
 
     [SerializeField] private int coinsLength;
     [SerializeField] private float timeBetweenSpawn;
-    
+
+    private void Awake()
+    {
+        coinsLength = 4;
+        timeBetweenSpawn = 2;
+    }
+
     private void Update()
     {
         currentPos = transform.position;
@@ -23,13 +29,14 @@ public class Spawner : MonoBehaviour
 
     private void SpawnSaw()
     {
-        if (Random.Range(0, 100) == 50 && !isSpawnerBusy)
+        if (Random.Range(0, 200) == 100 && !isSpawnerBusy)
         {
             isSpawnerBusy = true;
+            currentPos.y = Random.Range(1, 3);
             Instantiate(EnemyPref, currentPos, Quaternion.identity);
             do {
                 _cooldown += Time.deltaTime;
-            } while (_cooldown <= 3f);
+            } while (_cooldown < 5f);
 
             isSpawnerBusy = false;
             _cooldown = 0f;

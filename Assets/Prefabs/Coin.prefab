@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6418504016684510981}
   - component: {fileID: 6418504016684510980}
-  - component: {fileID: 6418504016684510982}
   - component: {fileID: 6418504016684510983}
+  - component: {fileID: 736305638342346768}
   m_Layer: 0
   m_Name: Coin
   m_TagString: coin
@@ -27,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6418504016684510979}
   m_LocalRotation: {x: -0, y: -0.9994305, z: -0, w: 0.033746064}
-  m_LocalPosition: {x: -1.39, y: 1.02, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.1751256, y: 1.1751256, z: 1.1751256}
   m_Children: []
   m_Father: {fileID: 0}
@@ -82,25 +82,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &6418504016684510982
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6418504016684510979}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 01dac80b2c9e44e45955fc70579d9107, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!58 &6418504016684510983
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -117,3 +98,22 @@ CircleCollider2D:
   m_Offset: {x: 0.01995594, y: 0.014932741}
   serializedVersion: 2
   m_Radius: 0.38044766
+--- !u!95 &736305638342346768
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6418504016684510979}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: dd20f291bf1681242be018c64120555c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
