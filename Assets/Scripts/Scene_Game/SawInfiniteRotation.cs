@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class SawInfiniteRotation : MonoBehaviour
 {
-    [SerializeField] private float rotationSpeed;
+    private float rotationSpeed;
+
+    private void Awake()
+    {
+        rotationSpeed = 200;
+    }
 
     private void FixedUpdate()
     {
