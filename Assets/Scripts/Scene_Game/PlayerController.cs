@@ -6,23 +6,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    [SerializeField] private float jumpForce;
+    [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _jumpForce;
 
-    public int coinsCollected;
-    private Rigidbody2D rb2d;
-    public GameObject score;
+    private bool _isGrounded;
+    private float _moveInput;
+    private Rigidbody2D _rb2d;
 
-    private bool isGrounded;
-    private float moveInput;
+    public int CoinsCollected;
+    public GameObject Score;
 
     private void Awake()
     {
-        speed = 5f;
-        jumpForce = 7f;
-        rb2d = GetComponent<Rigidbody2D>();
-        isGrounded = true;
-        coinsCollected = 0;
+        _moveSpeed = 5f;
+        _jumpForce = 7f;
+        _rb2d = GetComponent<Rigidbody2D>();
+        _isGrounded = true;
+        CoinsCollected = 0;
     }
 
     private void Update()
@@ -33,35 +33,36 @@ public class PlayerController : MonoBehaviour
 
     private void Moving()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        rb2d.velocity = new Vector2(moveInput * speed, rb2d.velocity.y);
+        _moveInput = Input.GetAxisRaw("Horizontal");
+        _rb2d.velocity = new Vector2(_moveInput * _moveSpeed, _rb2d.velocity.y);
 
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
-            rb2d.velocity = Vector2.up * jumpForce;
-            isGrounded = false;
+            _rb2d.velocity = Vector2.up * _jumpForce;
+            _isGrounded = false;
         }
     }
 
     private void UpdateScore()
     {
-        score.GetComponent<UnityEngine.UI.Text>().text = "Score: " + coinsCollected.ToString();
+        Score.GetComponent<UnityEngine.UI.Text>().text = "Score: " + CoinsCollected.ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //Если у объектов есть только тэг и имя, без скрипта внутри, как еще их можно определять?
         if (collision.gameObject.tag == "ground")
-            isGrounded = true;
+            _isGrounded = true;
         if (collision.gameObject.tag == "enemy")
             ApplyDamage();
         if (collision.gameObject.tag == "coin")
         {
-            coinsCollected++;
+            CoinsCollected++;
             Destroy(collision.gameObject);
-            
         }
     }
-    //наколхозил пздц тут, соррян, не знаю как передавать события 
+    
+    //Здесь колхоз дикий, но я все еще не совсем понимаю как передавать сообщения в объекты, о которых наш класс не должен знать.
     public void ApplyDamage()
     {
         Destroy(gameObject);

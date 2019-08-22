@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class SceneController : MonoBehaviour
 {
-    public Canvas creditsPopup;
-    protected Animator creditsShowAnimator;
+    public Canvas CreditsPopup;
+    protected Animator _creditsShowAnimator;
 
     private void Start()
     {
-        creditsShowAnimator = creditsPopup.GetComponent<Animator>();
+        _creditsShowAnimator = CreditsPopup.GetComponent<Animator>();
     }
 
     public void OnStartButtonClick()
@@ -21,7 +21,7 @@ public class SceneController : MonoBehaviour
 
     public void OnCreditsButtonClick()
     {
-        creditsShowAnimator.SetBool("Show", true);
+        _creditsShowAnimator.SetBool("Show", true);
     }
 
     public void OnExitButtonClick()
@@ -31,7 +31,7 @@ public class SceneController : MonoBehaviour
 
     public void OnClosePopupButton()
     {
-        creditsShowAnimator.SetBool("Show", false);
+        _creditsShowAnimator.SetBool("Show", false);
     }
 
 }

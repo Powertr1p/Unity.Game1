@@ -6,53 +6,54 @@ public class Spawner : MonoBehaviour
 {
     public GameObject EnemyPref;
     public GameObject CoinPref;
-    private Vector2 currentPos;
-    private float timePassed;
-    private bool isSpawnerBusy = false;
+    private Vector2 _currentPos;
+    private float _timePassed;
+    private bool _isSpawnerBusy; 
     private float _cooldown = 0;
 
-    [SerializeField] private int coinsLength;
-    [SerializeField] private float timeBetweenSpawn;
+    [SerializeField] private int _coinsLength;
+    [SerializeField] private float _timeBetweenSpawn;
 
     private void Awake()
     {
-        coinsLength = 4;
-        timeBetweenSpawn = 2;
+        _isSpawnerBusy = false;
+        _coinsLength = 4;
+        _timeBetweenSpawn = 2;
     }
 
     private void Update()
     {
-        currentPos = transform.position;
+        _currentPos = transform.position;
         SpawnSaw();
         SpawnCoins();
     }
 
     private void SpawnSaw()
     {
-        if (Random.Range(0, 200) == 100 && !isSpawnerBusy)
+        if (Random.Range(0, 200) == 100 && !_isSpawnerBusy)
         {
-            isSpawnerBusy = true;
-            currentPos.y = Random.Range(1, 3);
-            Instantiate(EnemyPref, currentPos, Quaternion.identity);
+            _isSpawnerBusy = true;
+            _currentPos.y = Random.Range(1, 3);
+            Instantiate(EnemyPref, _currentPos, Quaternion.identity);
             do {
                 _cooldown += Time.deltaTime;
             } while (_cooldown < 5f);
 
-            isSpawnerBusy = false;
+            _isSpawnerBusy = false;
             _cooldown = 0f;
         }
     }
 
     private void SpawnCoins()
     {
-        if (timePassed >= timeBetweenSpawn && !isSpawnerBusy)
+        if (_timePassed >= _timeBetweenSpawn && !_isSpawnerBusy)
         {
-            isSpawnerBusy = true;
-            for (int i = 0; i < coinsLength; i++)
+            _isSpawnerBusy = true;
+            for (int i = 0; i < _coinsLength; i++)
             {
-                currentPos.x += 1;
-                currentPos.y = 1;
-                Instantiate(CoinPref, currentPos, Quaternion.identity);
+                _currentPos.x += 1;
+                _currentPos.y = 1;
+                Instantiate(CoinPref, _currentPos, Quaternion.identity);
             }
 
             do
@@ -60,11 +61,11 @@ public class Spawner : MonoBehaviour
                 _cooldown += Time.deltaTime;
             } while (_cooldown <= 3f);
 
-            isSpawnerBusy = false;
+            _isSpawnerBusy = false;
             _cooldown = 0f;
-            timePassed = 0;
+            _timePassed = 0;
         }
         else
-            timePassed += Time.deltaTime;
+            _timePassed += Time.deltaTime;
     }
 }
