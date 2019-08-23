@@ -6,29 +6,25 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed;
-    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _moveSpeed = 5f;
+    [SerializeField] private float _jumpForce = 7f;
 
-    private bool _isGrounded;
+    private bool _isGrounded = true;
     private float _moveInput;
     private Rigidbody2D _rb2d;
 
-    public int CoinsCollected;
+    private int CoinsCollected = 0;
     public GameObject Score;
 
-    private void Awake()
+    private void Start()
     {
-        _moveSpeed = 5f;
-        _jumpForce = 7f;
         _rb2d = GetComponent<Rigidbody2D>();
-        _isGrounded = true;
-        CoinsCollected = 0;
     }
 
     private void Update()
     {
         Moving();
-        UpdateScore();
+        ShowScore();
     }
 
     private void Moving()
@@ -43,9 +39,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void UpdateScore()
+    private void ShowScore()
     {
-        Score.GetComponent<UnityEngine.UI.Text>().text = "Score: " + CoinsCollected.ToString();
+        Score.GetComponent<Text>().text = "Score: " + CoinsCollected.ToString();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

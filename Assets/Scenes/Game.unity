@@ -246,8 +246,8 @@ MonoBehaviour:
     type: 3}
   CoinPref: {fileID: 6418504016684510979, guid: 216889fb366bc5a41bae41af04e5f39f,
     type: 3}
-  coinsLength: 4
-  timeBetweenSpawn: 2
+  _coinsLength: 0
+  _timeBetweenSpawn: 0
 --- !u!4 &206404704 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2067095975939038189, guid: bd71dbb7b6894304299c2656678b9639,
@@ -911,10 +911,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 557eb4af74aab5e43ae387c4e259cad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpForce: 7
-  coinsCollected: 0
-  score: {fileID: 63710103}
+  _moveSpeed: 0
+  _jumpForce: 0
+  Score: {fileID: 63710103}
 --- !u!1 &1496537318
 GameObject:
   m_ObjectHideFlags: 0

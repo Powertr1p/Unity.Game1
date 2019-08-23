@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class SceneController : MonoBehaviour
 {
     public Canvas CreditsPopup;
-    protected Animator _creditsShowAnimator;
+    private Animator _creditsShowAnimator;
 
     private void Start()
     {
@@ -16,7 +16,7 @@ public class SceneController : MonoBehaviour
 
     public void OnStartButtonClick()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void OnCreditsButtonClick()

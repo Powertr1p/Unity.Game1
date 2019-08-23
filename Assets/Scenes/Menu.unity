@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7f2eca88e2fcf469cd7d1d11301230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  creditsPopup: {fileID: 85266230}
+  CreditsPopup: {fileID: 85266230}
 --- !u!1 &1152801069
 GameObject:
   m_ObjectHideFlags: 0
