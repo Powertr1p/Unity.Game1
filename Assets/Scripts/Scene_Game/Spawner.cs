@@ -4,21 +4,30 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public GameObject EnemyPref;
-    public GameObject CoinPref;
+    private GameObject _enemyPrefab;
+    private GameObject _coinPrefab;
+
     private Vector2 _currentPos;
+
     private float _timePassed;
     private bool _isSpawnerBusy; 
-    private float _cooldown = 0;
+    private float _localCooldown;
+    private int _coinsLength;
+    private float _globalCooldown;
 
-    [SerializeField] private int _coinsLength;
-    [SerializeField] private float _timeBetweenSpawn;
+    private float _timeBetweenSpawnSaw;
+    private float _timeBetweenSpawnCoins;
 
-    private void Awake()
+    private void Start()
     {
-        _isSpawnerBusy = false;
         _coinsLength = 4;
-        _timeBetweenSpawn = 2;
+        _isSpawnerBusy = false;
+
+        _timeBetweenSpawnSaw = 2.0f;
+        _timeBetweenSpawnCoins = 3.0f;
+
+        _enemyPrefab = Resources.Load("Prefabs/Enemy") as GameObject;
+        _coinPrefab = Resources.Load("Prefabs/Coin") as GameObject;
     }
 
     private void Update()
@@ -30,42 +39,34 @@ public class Spawner : MonoBehaviour
 
     private void SpawnSaw()
     {
-        if (Random.Range(0, 200) == 100 && !_isSpawnerBusy)
-        {
-            _isSpawnerBusy = true;
-            _currentPos.y = Random.Range(1, 3);
-            Instantiate(EnemyPref, _currentPos, Quaternion.identity);
-            do {
-                _cooldown += Time.deltaTime;
-            } while (_cooldown < 5f);
+        _timeBetweenSpawnSaw -= Time.deltaTime;
 
+        if (_timeBetweenSpawnSaw <= 0 && !_isSpawnerBusy && Random.Range(0, 200) == 100)
+        {
+             _isSpawnerBusy = true;
+             _currentPos.y = Random.Range(1, 3);
+             Instantiate(_enemyPrefab, _currentPos, Quaternion.identity);
             _isSpawnerBusy = false;
-            _cooldown = 0f;
+            _timeBetweenSpawnSaw = 1.0f;
         }
     }
 
     private void SpawnCoins()
     {
-        if (_timePassed >= _timeBetweenSpawn && !_isSpawnerBusy)
+        _timeBetweenSpawnCoins -= Time.deltaTime;
+
+        if (_timeBetweenSpawnSaw <= 0 && !_isSpawnerBusy && Random.Range(0, 200) == 100)
         {
             _isSpawnerBusy = true;
             for (int i = 0; i < _coinsLength; i++)
             {
                 _currentPos.x += 1;
                 _currentPos.y = 1;
-                Instantiate(CoinPref, _currentPos, Quaternion.identity);
+                Instantiate(_coinPrefab, _currentPos, Quaternion.identity);
             }
-
-            do
-            {
-                _cooldown += Time.deltaTime;
-            } while (_cooldown <= 3f);
-
             _isSpawnerBusy = false;
-            _cooldown = 0f;
-            _timePassed = 0;
+            _timeBetweenSpawnCoins = 5.0f;
         }
-        else
-            _timePassed += Time.deltaTime;
+       
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneController : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
     public Canvas CreditsPopup;
     private Animator _creditsShowAnimator;

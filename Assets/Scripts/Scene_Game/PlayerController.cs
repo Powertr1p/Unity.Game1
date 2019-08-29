@@ -1,68 +1,65 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float _moveSpeed = 5f;
-    [SerializeField] private float _jumpForce = 7f;
+    [SerializeField] private float _moveSpeedPerUnit;
+    [SerializeField] private float _jumpForce;
 
-    private bool _isGrounded = true;
-    private float _moveInput;
+    private bool _isGrounded;
+    private float _keyboardMoveInput;
     private Rigidbody2D _rb2d;
 
-    private int CoinsCollected = 0;
-    public GameObject Score;
+    public event UnityAction OnPlayerDeath;
+    public event UnityAction CoinCollected;
 
     private void Start()
     {
         _rb2d = GetComponent<Rigidbody2D>();
+        _jumpForce = 7.0f;
+        _moveSpeedPerUnit = 5.0f;
+        _isGrounded = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        Moving();
-        ShowScore();
+        MovingPlayer();
     }
 
-    private void Moving()
+    private void MovingPlayer()
     {
-        _moveInput = Input.GetAxisRaw("Horizontal");
-        _rb2d.velocity = new Vector2(_moveInput * _moveSpeed, _rb2d.velocity.y);
+        _keyboardMoveInput = Input.GetAxisRaw("Horizontal");
+        _rb2d.velocity = new Vector2(_keyboardMoveInput * _moveSpeedPerUnit, _rb2d.velocity.y);
 
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             _rb2d.velocity = Vector2.up * _jumpForce;
             _isGrounded = false;
         }
-    }
-
-    private void ShowScore()
-    {
-        Score.GetComponent<Text>().text = "Score: " + CoinsCollected.ToString();
-    }
+    } 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Если у объектов есть только тэг и имя, без скрипта внутри, как еще их можно определять?
         if (collision.gameObject.tag == "ground")
             _isGrounded = true;
-        if (collision.gameObject.tag == "enemy")
+        else if (collision.gameObject.GetComponent<SawInfiniteRotation>() != null)
             ApplyDamage();
-        if (collision.gameObject.tag == "coin")
+        else if (collision.gameObject.gameObject.tag == "coin")
         {
-            CoinsCollected++;
             Destroy(collision.gameObject);
+            if (CoinCollected != null)
+                CoinCollected.Invoke();
         }
     }
     
-    //Здесь колхоз дикий, но я все еще не совсем понимаю как передавать сообщения в объекты, о которых наш класс не должен знать.
     public void ApplyDamage()
     {
         Destroy(gameObject);
-        SceneManager.LoadScene(0);
+        if (OnPlayerDeath != null)
+            OnPlayerDeath.Invoke();
     }
 
 }

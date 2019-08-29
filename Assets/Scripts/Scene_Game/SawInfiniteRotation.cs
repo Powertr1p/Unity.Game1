@@ -6,7 +6,7 @@ public class SawInfiniteRotation : MonoBehaviour
 {
     private float _rotationSpeed;
 
-    private void Awake()
+    private void Start()
     {
         _rotationSpeed = 200;
     }
