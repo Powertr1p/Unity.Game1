@@ -2,18 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spawner : MonoBehaviour
+public class SpawnerLogic : MonoBehaviour
 {
     private GameObject _enemyPrefab;
     private GameObject _coinPrefab;
 
     private Vector2 _currentSpawnerPos;
 
-    private float _timePassed;
     private bool _isSpawnerBusy; 
-    private float _localCooldown;
     private int _coinsLength;
-    private float _globalCooldown;
 
     private float _timeBetweenSpawnSaw;
     private Vector2 _lastSpawnedSawPos;
@@ -46,18 +43,17 @@ public class Spawner : MonoBehaviour
 
         if (_timeBetweenSpawnSaw <= 0 && !_isSpawnerBusy && Random.Range(0, 51) == 25)
         {
-            Vector2 distanceBetweenSpawns = new Vector2();
+            Vector2 _distanceBetweenSpawns = new Vector2();
+            _distanceBetweenSpawns = _currentSpawnerPos - _lastSpawnedSawPos;
 
-            distanceBetweenSpawns = _currentSpawnerPos - _lastSpawnedSawPos;
-
-            if (distanceBetweenSpawns.x > 2)
+            if (_distanceBetweenSpawns.x > 3)
             {
                 _isSpawnerBusy = true;
                 _currentSpawnerPos.y = Random.Range(1, 4);
                 Instantiate(_enemyPrefab, _currentSpawnerPos, Quaternion.identity);
-                _isSpawnerBusy = false;
                 _lastSpawnedSawPos = _currentSpawnerPos;
                 _timeBetweenSpawnSaw = 1.0f;
+                _isSpawnerBusy = false;
             }
         }
     }
@@ -65,23 +61,23 @@ public class Spawner : MonoBehaviour
     private void SpawnCoins()
     {
         _timeBetweenSpawnCoins -= Time.deltaTime;
+
         if (_timeBetweenSpawnSaw <= 0 && !_isSpawnerBusy && Random.Range(0, 101) == 50)
         {
-            _isSpawnerBusy = true;
-            Vector2 distanceBetweenSpawns = new Vector2();
-            distanceBetweenSpawns = _currentSpawnerPos - _lastSpawnedCoinPos;
-
-            if (distanceBetweenSpawns.x > 3)
-            { 
-                 for (int i = 0; i < _coinsLength; i++)
+            Vector2 _distanceBetweenSpawns = new Vector2();
+            _distanceBetweenSpawns = _currentSpawnerPos - _lastSpawnedCoinPos;
+            if (_distanceBetweenSpawns.x > 3)
+            {
+                _isSpawnerBusy = true;
+                for (int i = 0; i < _coinsLength; i++)
                  {
                     _currentSpawnerPos.x += 1;
                     _currentSpawnerPos.y = 1;
                     Instantiate(_coinPrefab, _currentSpawnerPos, Quaternion.identity);
                     _lastSpawnedCoinPos = _currentSpawnerPos;
                  }
-             _isSpawnerBusy = false;
-             _timeBetweenSpawnCoins = 5.0f;
+                 _isSpawnerBusy = false;
+                 _timeBetweenSpawnCoins = 5.0f;
             }
         }
     }

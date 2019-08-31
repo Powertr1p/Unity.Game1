@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameController : MonoBehaviour
+public class LevelController : MonoBehaviour
 {
     private PlayerController _player;
     private Text _scoreText;
